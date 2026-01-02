@@ -1,0 +1,318 @@
+/* ============================================================
+   SPEECH PAGE - Full Page Clean Design
+   ============================================================ */
+
+* {
+    box-sizing: border-box;
+}
+
+.speech-page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Main Content */
+.speech-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    gap: 1.25rem;
+    overflow-y: auto;
+}
+
+/* Mascot */
+.mascot-container {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    flex-shrink: 0;
+}
+
+.mascot {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #0e2c6d;
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.mascot-ring {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+/* Mascot States */
+.mascot-container.listening .mascot {
+    border-color: #22c55e;
+}
+
+.mascot-container.listening .mascot-ring {
+    opacity: 1;
+    border-color: #22c55e;
+    animation: ringPulse 1.5s ease-in-out infinite;
+}
+
+.mascot-container.speaking .mascot {
+    border-color: #eab308;
+    animation: speakBounce 0.3s ease-in-out infinite alternate;
+}
+
+.mascot-container.speaking .mascot-ring {
+    opacity: 1;
+    border-color: #eab308;
+    animation: ringPulse 1s ease-in-out infinite;
+}
+
+.mascot-container.processing .mascot {
+    border-color: #3b82f6;
+}
+
+.mascot-container.processing .mascot-ring {
+    opacity: 1;
+    border-color: #3b82f6;
+    animation: ringSpin 1s linear infinite;
+}
+
+@keyframes ringPulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.1); opacity: 1; }
+}
+
+@keyframes speakBounce {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.03); }
+}
+
+@keyframes ringSpin {
+    0% { transform: rotate(0deg); border-style: dashed; }
+    100% { transform: rotate(360deg); border-style: dashed; }
+}
+
+/* Sound Waves */
+.mascot-waves {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 3px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.mascot-container.listening .mascot-waves,
+.mascot-container.speaking .mascot-waves {
+    opacity: 1;
+}
+
+.mascot-waves span {
+    width: 4px;
+    border-radius: 2px;
+    background: #0e2c6d;
+    animation: wave 0.5s ease-in-out infinite;
+}
+
+.mascot-container.listening .mascot-waves span { background: #22c55e; }
+.mascot-container.speaking .mascot-waves span { background: #eab308; }
+
+.mascot-waves span:nth-child(1) { height: 8px; animation-delay: 0s; }
+.mascot-waves span:nth-child(2) { height: 14px; animation-delay: 0.1s; }
+.mascot-waves span:nth-child(3) { height: 20px; animation-delay: 0.2s; }
+.mascot-waves span:nth-child(4) { height: 14px; animation-delay: 0.1s; }
+.mascot-waves span:nth-child(5) { height: 8px; animation-delay: 0s; }
+
+@keyframes wave {
+    0%, 100% { transform: scaleY(0.5); }
+    50% { transform: scaleY(1.2); }
+}
+
+/* Status Text */
+.status {
+    font-size: 0.9375rem;
+    color: #64748b;
+    text-align: center;
+    margin: 0;
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+.status.listening { color: #22c55e; }
+.status.speaking { color: #eab308; }
+.status.processing { color: #3b82f6; }
+.status.error { color: #ef4444; }
+
+/* Conversation Bubbles */
+.conversation {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.bubble {
+    padding: 0.75rem 1rem;
+    border-radius: 16px;
+    background: white;
+    border: 1px solid #e2e8f0;
+}
+
+.bubble-label {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #94a3b8;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.bubble p {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: #1e293b;
+    word-wrap: break-word;
+}
+
+.ai-bubble {
+    background: linear-gradient(135deg, #f0f9ff 0%, #fefce8 100%);
+    border-color: #0e2c6d20;
+}
+
+.ai-bubble .bubble-label {
+    color: #0e2c6d;
+}
+
+/* Mic Area */
+.mic-area {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    background: white;
+    border-top: 1px solid #e2e8f0;
+    flex-shrink: 0;
+}
+
+.mic-btn {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #0e2c6d 0%, #1e40af 100%);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(14, 44, 109, 0.3);
+    transition: all 0.2s ease;
+}
+
+.mic-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(14, 44, 109, 0.4);
+}
+
+.mic-btn:active {
+    transform: scale(0.95);
+}
+
+.mic-btn.recording {
+    background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+    animation: micPulse 1s ease-in-out infinite;
+}
+
+.mic-btn:disabled {
+    background: #cbd5e1;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+@keyframes micPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+    50% { box-shadow: 0 0 0 20px rgba(220, 38, 38, 0); }
+}
+
+.mic-emoji {
+    font-size: 2rem;
+}
+
+.mic-hint {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    margin: 0;
+    text-align: center;
+}
+
+/* Toast */
+.toast-container {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.toast {
+    background: #1e293b;
+    color: white;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    animation: toastIn 0.3s ease;
+}
+
+.toast.error { background: #dc2626; }
+.toast.success { background: #22c55e; }
+
+@keyframes toastIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile Optimizations */
+@media (max-height: 600px) {
+    .mascot-container {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .speech-main {
+        padding: 1rem;
+        gap: 1rem;
+    }
+    
+    .mic-btn {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .mic-emoji {
+        font-size: 1.75rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .bubble p {
+        font-size: 0.875rem;
+    }
+    
+    .status {
+        font-size: 0.875rem;
+    }
+}

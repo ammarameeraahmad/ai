@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training - Karismatif Gadjah Mada AI Assistant</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="UGM Logo [Universitas Gadjah Mada].jpg">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+    
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-logo">
+                <div class="logo-container">
+                    <div class="logo-ring"></div>
+                    <img 
+                        src="UGM Logo [Universitas Gadjah Mada].jpg" 
+                        alt="UGM Logo" 
+                        class="logo-img"
+                    >
+                </div>
+                <div class="header-title">
+                    <h1>Karismatif Gadjah Mada AI Assistant</h1>
+                    <span>Knowledge Base Training</span>
+                </div>
+            </div>
+            <nav class="header-nav">
+                <a href="index.html" class="nav-link">
+                    <span class="nav-icon">💬</span>
+                    <span>Chat</span>
+                </a>
+                <a href="speech.html" class="nav-link">
+                    <span class="nav-icon">🎙️</span>
+                    <span>Speech</span>
+                </a>
+                <a href="training.html" class="nav-link active">
+                    <span class="nav-icon">📚</span>
+                    <span>Training</span>
+                </a>
+            </nav>
+        </header>
+
+        <!-- Training Container -->
+        <div class="training-container">
+            <!-- Add Knowledge Panel -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h2 id="formTitle"><span class="emoji">📝</span> Tambah Knowledge</h2>
+                </div>
+                
+                <form class="training-form" id="trainingForm">
+                    <input type="hidden" id="editingId" value="">
+                    <div class="form-group">
+                        <label for="docTitle">📌 Judul Dokumen</label>
+                        <input 
+                            type="text" 
+                            id="docTitle" 
+                            placeholder="Contoh: Informasi Pendaftaran 2025"
+                            required
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="docTags">🏷️ Tags (pisahkan dengan koma)</label>
+                        <input 
+                            type="text" 
+                            id="docTags" 
+                            placeholder="Contoh: pendaftaran, snbp, 2025"
+                        >
+                        <small class="form-hint">💡 Tags membantu AI menemukan informasi yang tepat</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="docContent">📄 Konten Knowledge</label>
+                        <textarea 
+                            id="docContent" 
+                            placeholder="Tulis informasi yang ingin diajarkan ke AI...
+
+Contoh:
+Pendaftaran mahasiswa baru UGM tahun 2025 dibuka melalui beberapa jalur:
+1. SNBP (Seleksi Nasional Berdasarkan Prestasi)
+2. SNBT (Seleksi Nasional Berdasarkan Tes)
+3. Seleksi Mandiri UGM"
+                            required
+                        ></textarea>
+                    </div>
+                    
+                    <!-- Advanced Settings - Collapsible -->
+                    <details class="advanced-settings">
+                        <summary>
+                            <span>⚙️ Pengaturan Lanjutan</span>
+                            <span class="toggle-icon">▼</span>
+                        </summary>
+                        <div class="advanced-content">
+                            <div class="form-group">
+                                <label for="docQuestion">❓ Pertanyaan Saran <span style="font-weight: normal; opacity: 0.7;">(opsional)</span></label>
+                                <input 
+                                    type="text" 
+                                    id="docQuestion" 
+                                    placeholder="Contoh: Bagaimana cara mendaftar UGM"
+                                >
+                                <div style="margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" id="skipAiGenerate" style="width: auto;">
+                                    <label for="skipAiGenerate" style="font-size: 0.8125rem; color: var(--text-secondary); cursor: pointer; margin: 0;">
+                                        🚫 Skip AI (pakai judul sebagai pertanyaan jika kosong)
+                                    </label>
+                                </div>
+                                <small class="form-hint">💡 Tanda "?" akan ditambahkan otomatis. Pertanyaan ini untuk suggestion chips di halaman chat.</small>
+                            </div>
+                        </div>
+                    </details>
+                    
+                    <div style="display: flex; gap: 0.75rem;">
+                        <button type="submit" class="btn btn-primary" id="submitBtn" style="flex: 1;">
+                            <span>💾</span>
+                            <span>Simpan Knowledge</span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="cancelBtn" style="display: none;">
+                            <span>❌</span>
+                            <span>Batal</span>
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="tips-box">
+                    <h4>💡 Tips Menulis Knowledge</h4>
+                    <ul>
+                        <li>Tulis informasi dengan jelas dan lengkap</li>
+                        <li>Gunakan tags untuk mempermudah pencarian</li>
+                        <li>Sertakan data spesifik (tanggal, biaya, dll)</li>
+                        <li>Pisahkan topik berbeda ke dokumen terpisah</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Knowledge List Panel -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>
+                        <span class="emoji">📚</span> Knowledge Base 
+                        <span class="badge" id="docCount">0</span>
+                    </h2>
+                    <button class="btn btn-danger btn-sm" id="clearAllBtn">
+                        🗑️ Hapus Semua
+                    </button>
+                </div>
+                
+                <div class="search-box">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Cari knowledge..."
+                    >
+                </div>
+                
+                <div class="knowledge-list" id="knowledgeList">
+                    <div class="empty-state">
+                        <div class="icon">📭</div>
+                        <p>Belum ada knowledge yang ditambahkan</p>
+                        <p style="font-size: 0.8125rem; margin-top: 0.5rem; opacity: 0.7;">
+                            Mulai tambahkan dokumen pertama! ✨
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Firebase SDK v8 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    
+    <!-- App Scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/training.js"></script>
+</body>
+</html>

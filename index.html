@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karismatif Gadjah Mada AI Assistant ✨</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="UGM Logo [Universitas Gadjah Mada].jpg">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+    
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-logo">
+                <div class="logo-container">
+                    <div class="logo-ring"></div>
+                    <img 
+                        src="UGM Logo [Universitas Gadjah Mada].jpg" 
+                        alt="UGM Logo" 
+                        class="logo-img"
+                    >
+                </div>
+                <div class="header-title">
+                    <h1>Karismatif Gadjah Mada AI Assistant</h1>
+                    <span>
+                        <span class="status-dot" id="statusDot"></span>
+                        <span id="statusText">Connecting...</span>
+                    </span>
+                </div>
+            </div>
+            <nav class="header-nav">
+                <a href="index.html" class="nav-link active">
+                    <span class="nav-icon">💬</span>
+                    <span>Chat</span>
+                </a>
+                <a href="speech.html" class="nav-link">
+                    <span class="nav-icon">🎙️</span>
+                    <span>Speech</span>
+                </a>
+                <a href="training.html" class="nav-link">
+                    <span class="nav-icon">📚</span>
+                    <span>Training</span>
+                </a>
+            </nav>
+        </header>
+
+        <!-- API Key Warning -->
+        <div class="api-warning" id="apiWarning" style="display: none;">
+            ⚠️ API Key belum diatur! Hubungi administrator untuk setup.
+        </div>
+
+        <!-- Chat Container -->
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <!-- Welcome Message -->
+                <div class="message assistant">
+                    <div class="message-avatar">
+                        <img 
+                            src="UGM Logo [Universitas Gadjah Mada].jpg" 
+                            alt="UGM"
+                        >
+                    </div>
+                    <div class="message-content">
+                        <p>Halo! 👋 Selamat datang di <strong>Karismatif Gadjah Mada AI Assistant</strong>!</p>
+                        <p class="text-muted">Aku siap bantu kamu soal Karismatif Gadjah Mada, UGM, fakultas, atau info kampus lainnya. Tanya aja! 🎓✨</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input -->
+            <div class="chat-input-container">
+                <!-- Suggestion Chips -->
+                <div class="suggestion-chips" id="suggestionChips" style="display: none;">
+                    <button class="suggestion-chip" data-suggestion=""></button>
+                    <button class="suggestion-chip" data-suggestion=""></button>
+                    <button class="suggestion-chip" data-suggestion=""></button>
+                    <button class="refresh-suggestions" id="refreshSuggestions" title="Ganti saran">
+                        🔄
+                    </button>
+                </div>
+                
+                <div class="chat-input-wrapper">
+                    <textarea 
+                        class="chat-input" 
+                        id="chatInput" 
+                        placeholder="Ketik pesan kamu di sini... ✨"
+                        rows="1"
+                    ></textarea>
+                    <button class="send-button" id="sendButton">
+                        ➤
+                    </button>
+                </div>
+                <div class="input-hint">
+                    📚 <span class="count" id="knowledgeCount">0</span> dokumen di knowledge base
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Firebase SDK v8 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    
+    <!-- App Scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/rag.js"></script>
+    <script src="js/groq.js"></script>
+    <script src="js/chat.js"></script>
+</body>
+</html>

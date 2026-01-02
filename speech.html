@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Voice - Karismatif Gadjah Mada AI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/speech.css">
+    <link rel="icon" href="UGM Logo [Universitas Gadjah Mada].jpg">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+    
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-logo">
+                <div class="logo-container">
+                    <div class="logo-ring"></div>
+                    <img 
+                        src="UGM Logo [Universitas Gadjah Mada].jpg" 
+                        alt="UGM Logo" 
+                        class="logo-img"
+                    >
+                </div>
+                <div class="header-title">
+                    <h1>Karismatif Gadjah Mada AI Assistant</h1>
+                    <span>
+                        <span class="status-dot" id="statusDot"></span>
+                        <span id="statusText">🎙️ Voice Chat</span>
+                    </span>
+                </div>
+            </div>
+            <nav class="header-nav">
+                <a href="index.html" class="nav-link">
+                    <span class="nav-icon">💬</span>
+                    <span>Chat</span>
+                </a>
+                <a href="speech.html" class="nav-link active">
+                    <span class="nav-icon">🎙️</span>
+                    <span>Speech</span>
+                </a>
+                <a href="training.html" class="nav-link">
+                    <span class="nav-icon">📚</span>
+                    <span>Training</span>
+                </a>
+            </nav>
+        </header>
+
+        <!-- Speech Page -->
+        <div class="speech-page">
+            <!-- Main Content -->
+        <main class="speech-main">
+            <!-- Mascot -->
+            <div class="mascot-container" id="mascotContainer">
+                <div class="mascot-ring"></div>
+                <img src="maskot.webp" alt="Maskot" class="mascot" id="mascot">
+                <div class="mascot-waves">
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+            </div>
+
+            <!-- Status -->
+            <p class="status" id="status">Tekan tombol untuk bicara</p>
+
+            <!-- Conversation -->
+            <div class="conversation" id="conversation">
+                <div class="bubble user-bubble" id="userBubble">
+                    <span class="bubble-label">Kamu</span>
+                    <p id="userText">-</p>
+                </div>
+                <div class="bubble ai-bubble" id="aiBubble">
+                    <span class="bubble-label">AI</span>
+                    <p id="aiText">-</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Big Mic Button -->
+        <div class="mic-area">
+            <button class="mic-btn" id="micBtn">
+                <span class="mic-emoji">🎤</span>
+            </button>
+            <p class="mic-hint">Bicara → Diam 2 detik → AI jawab</p>
+        </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    
+    <!-- Silero VAD - Neural Network Voice Activity Detection -->
+    <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.14.0/dist/ort.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@ricky0123/vad-web@0.0.7/dist/bundle.min.js"></script>
+    
+    <script src="js/firebase-config.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/rag.js"></script>
+    <script src="js/speech.js"></script>
+</body>
+</html>

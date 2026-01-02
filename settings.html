@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Karismatif Gadjah Mada AI Assistant</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="UGM Logo [Universitas Gadjah Mada].jpg">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+    
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-logo">
+                <div class="logo-container">
+                    <div class="logo-ring"></div>
+                    <img 
+                        src="UGM Logo [Universitas Gadjah Mada].jpg" 
+                        alt="UGM Logo" 
+                        class="logo-img"
+                    >
+                </div>
+                <div class="header-title">
+                    <h1>Karismatif Gadjah Mada AI Assistant</h1>
+                    <span>Settings ⚙️</span>
+                </div>
+            </div>
+            <nav class="header-nav">
+                <a href="index.html" class="nav-link">
+                    <span class="nav-icon">💬</span>
+                    <span>Chat</span>
+                </a>
+                <a href="speech.html" class="nav-link">
+                    <span class="nav-icon">🎙️</span>
+                    <span>Speech</span>
+                </a>
+                <a href="training.html" class="nav-link">
+                    <span class="nav-icon">📚</span>
+                    <span>Training</span>
+                </a>
+            </nav>
+        </header>
+
+        <!-- Password Login Modal -->
+        <div id="passwordModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; align-items: center; justify-content: center;">
+            <div style="background: white; padding: 2rem; border-radius: 12px; max-width: 400px; width: 90%;">
+                <h2 style="margin: 0 0 1rem 0; color: var(--ugm-blue);">🔒 Protected Area</h2>
+                <p style="margin: 0 0 1.5rem 0; color: var(--text-secondary); font-size: 0.9rem;">Settings page memerlukan password untuk akses</p>
+                <input type="password" id="passwordInput" placeholder="Masukkan password..." style="width: 100%; padding: 0.875rem 1rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9375rem; margin-bottom: 1rem;">
+                <button onclick="checkPassword()" style="width: 100%; padding: 0.875rem; background: var(--ugm-blue); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">Masuk</button>
+                <p id="errorMsg" style="color: var(--error); font-size: 0.8125rem; margin: 0.5rem 0 0 0; display: none;">Password salah!</p>
+                <a href="index.html" style="display: block; text-align: center; margin-top: 1rem; color: var(--text-secondary); font-size: 0.875rem;">← Kembali ke Chat</a>
+            </div>
+        </div>
+
+        <!-- Settings Container -->
+        <div class="settings-container" id="settingsContent" style="display: none;">
+            <div class="panel">
+                <div class="panel-header">
+                    <h2><span class="emoji">🔑</span> API Configuration</h2>
+                </div>
+                
+                <form id="settingsForm">
+                    <div class="form-group">
+                        <label for="apiKeys">🔐 Groq API Keys (satu per baris)</label>
+                        <textarea 
+                            id="apiKeys" 
+                            rows="4"
+                            placeholder="gsk_key1_xxxxxxxxxxxxxxxxx
+gsk_key2_xxxxxxxxxxxxxxxxx
+gsk_key3_xxxxxxxxxxxxxxxxx"
+                        ></textarea>
+                        <small class="form-hint">
+                            💡 Masukkan beberapa API key (satu per baris) untuk auto-failover saat rate limit. Dapatkan gratis dari <a href="https://console.groq.com" target="_blank">console.groq.com</a> 🚀
+                        </small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="modelSelect">🤖 Model AI</label>
+                        <select id="modelSelect">
+                            <option value="llama-3.3-70b-versatile">⭐ Llama 3.3 70B (Recommended)</option>
+                            <option value="llama-3.1-70b-versatile">Llama 3.1 70B</option>
+                            <option value="llama-3.1-8b-instant">⚡ Llama 3.1 8B (Faster)</option>
+                            <option value="meta-llama/llama-4-scout-17b-16e-instruct">🔍 Llama 4 Scout 17B (Newest)</option>
+                            <option value="mixtral-8x7b-32768">Mixtral 8x7B</option>
+                            <option value="gemma2-9b-it">Gemma 2 9B</option>
+                        </select>
+                        <small class="form-hint">
+                            Llama 4 Scout = model terbaru Meta untuk reasoning & analysis 🔍
+                        </small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="systemPrompt">🎭 System Prompt (Persona AI)</label>
+                        <textarea id="systemPrompt" rows="6">Kamu adalah asisten virtual UGM (Universitas Gadjah Mada) yang ramah, helpful, dan gaul tapi tetap informatif.
+
+Panduan:
+1. Jawab dalam Bahasa Indonesia yang baik tapi santai
+2. Jika ada informasi dari konteks yang diberikan, prioritaskan informasi tersebut
+3. Jika tidak tahu jawabannya, akui dengan jujur
+4. Berikan jawaban yang ringkas namun lengkap
+5. Gunakan emoji sesekali biar lebih friendly 😊✨
+6. Boleh pakai bahasa gaul tapi jangan berlebihan</textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        💾 Simpan Settings
+                    </button>
+                </form>
+            </div>
+            
+            <div class="panel">
+                <div class="panel-header">
+                    <h2><span class="emoji">📊</span> Status</h2>
+                </div>
+                
+                <div class="status-grid">
+                    <div class="status-item">
+                        <span class="status-label">API Key</span>
+                        <span class="status-value" id="apiStatus">❌ Belum diatur</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Firebase</span>
+                        <span class="status-value" id="firebaseStatus">🔄 Checking...</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Knowledge Base</span>
+                        <span class="status-value" id="kbStatus">0 dokumen</span>
+                    </div>
+                </div>
+                
+                <hr style="border-color: var(--border-color); margin: 1.5rem 0;">
+                
+                <div class="form-group">
+                    <label>🧹 Data Management</label>
+                    <div class="button-group">
+                        <button type="button" class="btn btn-secondary" id="exportBtn">
+                            📤 Export
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="importBtn">
+                            📥 Import
+                        </button>
+                        <input type="file" id="importFile" accept=".json" style="display: none;">
+                    </div>
+                </div>
+                
+                <div class="form-group" style="margin-top: 1rem;">
+                    <button type="button" class="btn btn-danger" id="clearChatBtn">
+                        🗑️ Hapus Riwayat Chat
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Suggested Questions Panel -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>
+                        <span class="emoji">💬</span> Saran Pertanyaan 
+                        <span class="badge" id="questionCount">0</span>
+                    </h2>
+                    <button class="btn btn-primary btn-sm" id="addQuestionBtn">
+                        ➕ Tambah
+                    </button>
+                </div>
+                
+                <!-- Add/Edit Question Form -->
+                <div class="question-form" id="questionForm" style="display: none;">
+                    <input type="hidden" id="editQuestionId">
+                    <div class="form-group" style="margin-bottom: 0.75rem;">
+                        <input 
+                            type="text" 
+                            id="questionInput" 
+                            placeholder="Masukkan pertanyaan (max 5 kata)..."
+                            style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 0.5rem;"
+                        >
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn btn-primary btn-sm" id="saveQuestionBtn">💾 Simpan</button>
+                        <button class="btn btn-secondary btn-sm" id="cancelQuestionBtn">❌ Batal</button>
+                    </div>
+                </div>
+                
+                <!-- Questions List -->
+                <div class="questions-list" id="questionsList">
+                    <div class="empty-state">
+                        <p>📋 Belum ada saran pertanyaan</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Firebase SDK v8 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    
+    <!-- App Scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/storage.js"></script>
+    
+    <script>
+        // Toast helper
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // DOM Elements
+        const apiKeysInput = document.getElementById('apiKeys');
+        const modelSelect = document.getElementById('modelSelect');
+        const systemPrompt = document.getElementById('systemPrompt');
+        const settingsForm = document.getElementById('settingsForm');
+        
+        // Load settings
+        async function loadSettings() {
+            const settings = await Storage.getSettings();
+            
+            // Load API keys (support old format)
+            if (settings.apiKeys && Array.isArray(settings.apiKeys)) {
+                apiKeysInput.value = settings.apiKeys.join('\n');
+            } else if (settings.apiKey) {
+                apiKeysInput.value = settings.apiKey;
+            }
+            
+            modelSelect.value = settings.model || 'llama-3.3-70b-versatile';
+            if (settings.systemPrompt) {
+                systemPrompt.value = settings.systemPrompt;
+            }
+            updateStatus();
+        }
+        
+        // Update status
+        async function updateStatus() {
+            const settings = await Storage.getSettings();
+            
+            // API Status
+            const apiKeys = settings.apiKeys || [settings.apiKey];
+            const validKeys = apiKeys.filter(k => k && k.trim());
+            document.getElementById('apiStatus').innerHTML = validKeys.length > 0
+                ? `✅ ${validKeys.length} key${validKeys.length > 1 ? 's' : ''} tersedia` 
+                : '❌ Belum diatur';
+            
+            // Firebase Status
+            try {
+                await database.ref('_health').set({ timestamp: Date.now() });
+                document.getElementById('firebaseStatus').innerHTML = '✅ Connected';
+            } catch (e) {
+                document.getElementById('firebaseStatus').innerHTML = '❌ Error';
+                console.error('Firebase error:', e);
+            }
+            
+            // Knowledge Count
+            try {
+                const snapshot = await database.ref('knowledge').once('value');
+                const data = snapshot.val();
+                const count = data ? Object.keys(data).length : 0;
+                document.getElementById('kbStatus').innerHTML = `📚 ${count} dokumen`;
+            } catch (e) {
+                document.getElementById('kbStatus').innerHTML = 'Error';
+            }
+        }
+        
+        // Save settings
+        settingsForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // ⚠️ CHECK AUTH
+            if (!Auth.isAuthenticated()) {
+                showToast('Session expired! Silakan login lagi.', 'error');
+                showPasswordModal();
+                return;
+            }
+            
+            // Parse API keys (satu per baris)
+            const apiKeysText = apiKeysInput.value.trim();
+            const apiKeys = apiKeysText.split('\n').map(k => k.trim()).filter(k => k);
+            
+            const success = await Storage.saveSettings({
+                apiKeys: apiKeys,
+                apiKey: apiKeys[0] || '', // Backward compatibility
+                model: modelSelect.value,
+                systemPrompt: systemPrompt.value
+            });
+            
+            if (success) {
+                showToast(`Settings tersimpan! ${apiKeys.length} API key${apiKeys.length > 1 ? 's' : ''} aktif ✅`, 'success');
+                Storage.resetApiKeyIndex(); // Reset ke key pertama
+                Auth.extendSession(); // Extend session on successful save
+            } else {
+                showToast('Gagal menyimpan settings! ❌', 'error');
+            }
+            
+            updateStatus();
+        });
+        
+        // Export
+        document.getElementById('exportBtn').addEventListener('click', async () => {
+            try {
+                const snapshot = await database.ref('knowledge').once('value');
+                const data = snapshot.val() || {};
+                const exportData = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+                
+                const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `ugm-knowledge-${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+                
+                showToast('Export berhasil! 📤', 'success');
+            } catch (e) {
+                showToast('Gagal export: ' + e.message, 'error');
+            }
+        });
+        
+        // Import
+        document.getElementById('importBtn').addEventListener('click', () => {
+            document.getElementById('importFile').click();
+        });
+        
+        document.getElementById('importFile').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            try {
+                const text = await file.text();
+                const data = JSON.parse(text);
+                
+                let imported = 0;
+                for (const doc of data) {
+                    const { id, ...rest } = doc;
+                    await database.ref('knowledge').push().set({
+                        ...rest,
+                        createdAt: rest.createdAt || Date.now()
+                    });
+                    imported++;
+                }
+                
+                showToast(`${imported} dokumen berhasil di-import! 📥`, 'success');
+                updateStatus();
+                e.target.value = '';
+            } catch (err) {
+                showToast('Gagal import: ' + err.message, 'error');
+            }
+        });
+        
+        // Clear chat
+        document.getElementById('clearChatBtn').addEventListener('click', () => {
+            if (confirm('Hapus semua riwayat chat?')) {
+                Storage.clearChatHistory();
+                showToast('Riwayat chat dihapus! 🗑️', 'success');
+            }
+        });
+        
+        // Password Protection dengan Auth Service
+        function checkPassword() {
+            const input = document.getElementById('passwordInput');
+            const errorMsg = document.getElementById('errorMsg');
+            
+            // Login dengan Auth service
+            Auth.login(input.value).then(() => {
+                // Show content
+                document.getElementById('passwordModal').style.display = 'none';
+                document.getElementById('settingsContent').style.display = 'grid';
+                loadSettings();
+                showToast('Login berhasil! ✅', 'success');
+            }).catch(error => {
+                errorMsg.style.display = 'block';
+                input.value = '';
+                input.focus();
+            });
+        }
+        
+        function checkAccess() {
+            // Check dengan Auth service
+            if (Auth.isAuthenticated()) {
+                document.getElementById('settingsContent').style.display = 'grid';
+                loadSettings();
+                return;
+            }
+            
+            // Show password modal
+            showPasswordModal();
+        }
+        
+        function showPasswordModal() {
+            document.getElementById('passwordModal').style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('passwordInput').focus();
+            }, 100);
+        }
+        
+        // Handle Enter key on password input
+        document.getElementById('passwordInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+        
+        // Check access on page load
+        checkAccess();
+        
+        // ============================================================
+        // SUGGESTED QUESTIONS MANAGEMENT
+        // ============================================================
+        
+        let allQuestions = [];
+        let isEditingQuestion = false;
+        
+        async function loadQuestions() {
+            try {
+                const snapshot = await database.ref('knowledge').once('value');
+                const data = snapshot.val();
+                
+                if (!data) {
+                    allQuestions = [];
+                    renderQuestions([]);
+                    return;
+                }
+                
+                allQuestions = Object.keys(data).map(key => ({
+                    id: key,
+                    title: data[key].title,
+                    question: data[key].suggestedQuestion || data[key].title
+                }));
+                
+                renderQuestions(allQuestions);
+            } catch (error) {
+                console.error('Error loading questions:', error);
+            }
+        }
+        
+        function renderQuestions(questions) {
+            const questionsList = document.getElementById('questionsList');
+            const questionCount = document.getElementById('questionCount');
+            
+            questionCount.textContent = questions.length;
+            
+            if (questions.length === 0) {
+                questionsList.innerHTML = '<div class="empty-state"><p>📋 Belum ada saran pertanyaan</p></div>';
+                return;
+            }
+            
+            questionsList.innerHTML = questions.map(q => `
+                <div class="question-item" data-id="${q.id}">
+                    <div class="question-item-content">
+                        <div class="question-text">${escapeHtml(q.question)}</div>
+                        <div class="question-source">📝 ${escapeHtml(q.title)}</div>
+                    </div>
+                    <div class="question-item-actions">
+                        <button class="btn-icon" onclick="editQuestion('${q.id}')" title="Edit">✏️</button>
+                        <button class="btn-icon" onclick="deleteQuestion('${q.id}')" title="Hapus">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        document.getElementById('addQuestionBtn').addEventListener('click', () => {
+            document.getElementById('questionForm').style.display = 'block';
+            document.getElementById('editQuestionId').value = '';
+            document.getElementById('questionInput').value = '';
+            document.getElementById('questionInput').focus();
+            isEditingQuestion = false;
+        });
+        
+        window.editQuestion = function(id) {
+            const question = allQuestions.find(q => q.id === id);
+            if (!question) return;
+            
+            document.getElementById('questionForm').style.display = 'block';
+            document.getElementById('editQuestionId').value = id;
+            document.getElementById('questionInput').value = question.question;
+            isEditingQuestion = true;
+        };
+        
+        window.deleteQuestion = async function(id) {
+            const question = allQuestions.find(q => q.id === id);
+            if (!question) return;
+            
+            if (!confirm(`Hapus pertanyaan: "${question.question}"?`)) return;
+            
+            try {
+                await database.ref(`knowledge/${id}/suggestedQuestion`).remove();
+                showToast('Pertanyaan berhasil dihapus! 🗑️', 'success');
+                await loadQuestions();
+            } catch (error) {
+                console.error('Error deleting question:', error);
+                showToast('Gagal menghapus pertanyaan', 'error');
+            }
+        };
+        
+        document.getElementById('saveQuestionBtn').addEventListener('click', async () => {
+            const questionInput = document.getElementById('questionInput');
+            const question = questionInput.value.trim();
+            
+            if (!question) {
+                showToast('Pertanyaan tidak boleh kosong!', 'error');
+                return;
+            }
+            
+            const id = document.getElementById('editQuestionId').value;
+            
+            try {
+                await database.ref(`knowledge/${id}/suggestedQuestion`).set(question);
+                showToast('Pertanyaan berhasil disimpan! ✨', 'success');
+                
+                document.getElementById('questionForm').style.display = 'none';
+                document.getElementById('questionInput').value = '';
+                await loadQuestions();
+            } catch (error) {
+                console.error('Error saving question:', error);
+                showToast('Gagal menyimpan pertanyaan', 'error');
+            }
+        });
+        
+        document.getElementById('cancelQuestionBtn').addEventListener('click', () => {
+            document.getElementById('questionForm').style.display = 'none';
+            document.getElementById('questionInput').value = '';
+        });
+        
+        // Load questions on page load
+        setTimeout(loadQuestions, 500);
+    </script>
+</body>
+</html>
